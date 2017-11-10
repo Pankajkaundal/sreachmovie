@@ -1,12 +1,18 @@
-'use strict';
+ 'use strict';
 
 (function() {
 
   class searchMovieComponent {
     constructor($http, $scope, socket) {
       this.$http = $http;
-      this.socket = socket;
+
+      this.$scope = $scope;
       this.MovieData;
+      this.MovieDetails = [];
+
+      $scope.$on('$destroy', function(){
+        socket.unsyncUpdates('SearchMovieendpoint');
+      });
     }
 
     FindMovie() {
@@ -20,7 +26,35 @@
       });
     }
 
+    addMovie() {
 
+      console.log("function call");
+   this.$http.post('/api/SearchMovieendpoints', {
+
+  Title: this.MovieData.original_title,
+Duration: this.MovieData.runtime,
+   Poster: this.MovieData.poster_path,
+   Genre:this.MovieData.gen
+   });
+   }
+
+
+   $onInit(){
+
+         this.$http.get('/api/SearchMovieendpoints').then(response => {
+           this.MovieDetails = response.data;
+           this.socket.syncUpdates('SearchMovieendpoints', this.MovieDetails);
+         });
+
+    }
+
+
+
+    remove(Movie){
+
+         this.$http.delete('/api/SearchMovieendpoint/' + Movie._id);
+
+  }
   }
 
   angular.module('yoTemplateApp')

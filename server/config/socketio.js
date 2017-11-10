@@ -17,6 +17,14 @@ function onConnect(socket) {
   });
 
   // Insert sockets below
+  require('../api/theatreendpoint/theatreendpoint.socket').register(socket);
+  require('../api/rateendpoint/rateendpoint.socket').register(socket);
+  require('../api/paymentendpoint/paymentendpoint.socket').register(socket);
+  require('../api/moviemappingendpoint/moviemappingendpoint.socket').register(socket);
+  require('../api/confirmationendpoint/confirmationendpoint.socket').register(socket);
+  require('../api/bookingendpoint/bookingendpoint.socket').register(socket);
+  require('../api/SearchMovieendpoint/SearchMovieendpoint.socket').register(socket);
+  require('../api/moviesendpoint/moviesendpoint.socket').register(socket);
   require('../api/thing/thing.socket').register(socket);
 
 }

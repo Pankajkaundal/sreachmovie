@@ -7,6 +7,8 @@
     constructor($http, $scope, socket) {
       this.$http = $http;
       this.socket = socket;
+      this.mapp_arr = [];
+     this.MovieData= [];
       this.awesomeThings = [];
 
       $scope.$on('$destroy', function() {
@@ -20,6 +22,12 @@
           this.awesomeThings = response.data;
           this.socket.syncUpdates('thing', this.awesomeThings);
         });
+        this.$http.get('/api/moviemappingendpoint').then(response => {
+        this.mapp_arr = response.data;
+      });
+      this.$http.get('/api/SearchMovieendpoint').then(response => {
+        this.MovieData = response.data;
+      });
     }
 
     addThing() {
